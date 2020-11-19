@@ -31,7 +31,7 @@
             <pre>
             </pre>
         </form>
-    </div> <!-- input -->
+    </div>
     <?php
 
         if (isset($_GET["submit"])){
@@ -41,17 +41,25 @@
 
             $urlPart = $_GET['ticker-name'];
 
-            echo $json = file_get_contents($url . $urlPart . $param);
-            $obj = json_decode($json, true);
+            //echo
+            $json = file_get_contents($url . $urlPart . $param);
+            $obj = json_decode($json);
+
+            $longName = $obj->quoteSummary->result[0]->price->longName;
+            $symbol = $obj->quoteSummary->result[0]->price->symbol;
+            $regularMarketChange = $obj->quoteSummary->result[0]->price->regularMarketChange->fmt;
+            $regularMarketChangePercent = $obj->quoteSummary->result[0]->price->regularMarketChangePercent->fmt;
+            $regularMarketPrice = $obj->quoteSummary->result[0]->price->regularMarketPrice->raw;
+
+            echo $longName.'<br>';
+            echo $symbol.'<br>';
+            echo $regularMarketChange.'<br>';
+            echo $regularMarketChangePercent.'<br>';
+            echo $regularMarketPrice.'<br>';
 
             return $obj->result[0];
 
         }
-
-
-
-
-
     ?>
     <div class="content">
         <div class="row">
